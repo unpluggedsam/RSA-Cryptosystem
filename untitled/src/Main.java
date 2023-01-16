@@ -2,6 +2,7 @@ import java.math.BigInteger;
 
 public class Main {
     public static void main(String[] args) {
+
         Key key = new Key();
         BigInteger plaintext = new BigInteger("12345");
         BigInteger ciphertext = cipher(plaintext, key.getPublicKey(), key.getModulus());
