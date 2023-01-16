@@ -3,9 +3,9 @@ import java.security.SecureRandom;
 
 public class Key {
 
-    private final Pair privateKey;
-
-    private final Pair publicKey;
+    private BigInteger privateKey;
+    private BigInteger publicKey;
+    private BigInteger modulus;
 
 
     public Key() {
@@ -17,17 +17,22 @@ public class Key {
         BigInteger e = computeRelativelyPrimeNumber(r);
         BigInteger d = e.modInverse(r);
 
-        publicKey = new Pair(e, n);
-        privateKey = new Pair(d, n);
+        publicKey = e;
+        privateKey = d;
+        modulus = n;
 
     }
 
-    public Pair getPublicKey() {
+    public BigInteger getPublicKey() {
         return publicKey;
     }
 
-    public Pair getPrivateKey() {
+    public BigInteger getPrivateKey() {
         return privateKey;
+    }
+
+    public BigInteger getModulus() {
+        return modulus;
     }
 
     private Pair generateLargePrimeNumbers() {
