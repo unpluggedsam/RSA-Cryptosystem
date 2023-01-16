@@ -1,5 +1,5 @@
 import java.math.BigInteger;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class Key {
 
@@ -17,21 +17,17 @@ public class Key {
         BigInteger e = computeRelativelyPrimeNumber(r);
         BigInteger d = e.modInverse(r);
 
-        System.out.println(e);
-        System.out.println(d);
-        System.out.println(n);
-
         publicKey = new Pair(e, n);
         privateKey = new Pair(d, n);
 
     }
 
-    public int decrypt(BigInteger x) {
-        return pow(x, privateKey.getA()).mod(privateKey.getB()).intValue();
-    }
-
     public BigInteger encrypt(int x) {
         return pow(BigInteger.valueOf(x), publicKey.getA()).mod(publicKey.getB());
+    }
+
+    public int decrypt(BigInteger x) {
+        return pow(x, privateKey.getA()).mod(privateKey.getB()).intValue();
     }
 
 
@@ -46,18 +42,18 @@ public class Key {
     }
 
     private Pair generateLargePrimeNumbers() {
-        return new Pair(BigInteger.probablePrime(8, new Random()), BigInteger.probablePrime(8, new Random()));
+        return new Pair(BigInteger.probablePrime(1024, new SecureRandom()), BigInteger.probablePrime(1024, new SecureRandom()));
     }
 
     private BigInteger generateAlmostLargeAsN(Pair pair) {
-        return (pair.getA().subtract(BigInteger.ONE)).multiply(pair.getB().subtract(BigInteger.ONE));
+        return (pair.getA().subtract(BigInteger.ONE).multiply(pair.getB().subtract(BigInteger.ONE)));
     }
 
     private BigInteger computeRelativelyPrimeNumber(BigInteger r) {
 
-        BigInteger e = BigInteger.valueOf(3);
+        BigInteger e = BigInteger.valueOf(2);
 
-        while (!r.gcd(e).equals(BigInteger.ONE)) {
+        while (!r.gcd(e).equals(BigInteger.ONE) && e.compareTo(r) < 0) {
             e = e.nextProbablePrime();
         }
 
