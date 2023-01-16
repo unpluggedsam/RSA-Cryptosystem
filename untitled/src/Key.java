@@ -22,14 +22,13 @@ public class Key {
 
     }
 
-    public BigInteger encrypt(int x) {
-        return pow(BigInteger.valueOf(x), publicKey.getA()).mod(publicKey.getB());
+    public Pair getPublicKey() {
+        return publicKey;
     }
 
-    public int decrypt(BigInteger x) {
-        return pow(x, privateKey.getA()).mod(privateKey.getB()).intValue();
+    public Pair getPrivateKey() {
+        return privateKey;
     }
-
 
     BigInteger pow(BigInteger base, BigInteger exponent) {
         BigInteger result = BigInteger.ONE;
