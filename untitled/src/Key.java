@@ -30,16 +30,6 @@ public class Key {
         return privateKey;
     }
 
-    BigInteger pow(BigInteger base, BigInteger exponent) {
-        BigInteger result = BigInteger.ONE;
-        while (exponent.signum() > 0) {
-            if (exponent.testBit(0)) result = result.multiply(base);
-            base = base.multiply(base);
-            exponent = exponent.shiftRight(1);
-        }
-        return result;
-    }
-
     private Pair generateLargePrimeNumbers() {
         return new Pair(BigInteger.probablePrime(1024, new SecureRandom()), BigInteger.probablePrime(1024, new SecureRandom()));
     }
