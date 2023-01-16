@@ -3,9 +3,9 @@ import java.security.SecureRandom;
 
 public class Key {
 
-    private BigInteger privateKey;
-    private BigInteger publicKey;
-    private BigInteger modulus;
+    private final BigInteger privateKey;
+    private final BigInteger publicKey;
+    private final BigInteger modulus;
 
 
     public Key() {
