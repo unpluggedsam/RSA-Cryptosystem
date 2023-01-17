@@ -64,24 +64,7 @@ public class Main {
         }
         return binary;
     }
-
-    private static int convertArrayToInt(int[] input) {
-        int result = 0;
-        for (int i = 0; i < input.length; i++) {
-            result += input[i] * (int) Math.pow(10, input.length - i - 1);
-        }
-        return result;
-    }
-
-    public static int[] convertIntToArray(BigInteger input) {
-        String inputString = Integer.toString(input.intValue());
-        int[] result = new int[inputString.length()];
-        for (int i = 0; i < inputString.length(); i++) {
-            result[i] = inputString.charAt(i) - '0';
-        }
-        return result;
-    }
-
+    
 
     private static BigInteger cipher(BigInteger parsedInt, BigInteger publicKey, BigInteger modulus) {
         return parsedInt.modPow(publicKey, modulus);
