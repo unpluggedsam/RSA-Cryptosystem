@@ -11,12 +11,10 @@ public class Computer {
     private final BigInteger mod;
 
     public Computer() {
-
         Key key = new Key();
         this.publicKey = key.getPublicKey();
         this.privateKey = key.getPrivateKey();
         this.mod = key.getModulus();
-
     }
 
     public void sendMessage(Computer computer, String message, OneTimePad.KEY_SIZE size) {
