@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class Computer {
 
-    private List<String> recentMessages = new ArrayList<String>();
+    private final List<String> recentMessages = new ArrayList<String>();
 
     private final BigInteger publicKey;
     private final BigInteger privateKey;
