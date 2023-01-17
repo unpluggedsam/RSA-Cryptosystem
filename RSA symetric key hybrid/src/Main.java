@@ -21,21 +21,23 @@ public class Main {
 
         System.out.println(convertBinaryToString(encryptedBinary));
 
-        BigInteger parsedInt = convertBinaryToDecimal(binaryKey);
-        System.out.println("Decimal binary: " + parsedInt);
-        BigInteger encryptedKey = cipher(parsedInt, key.getPublicKey(), key.getModulus());
+        BigInteger binaryKeyAsDecimal = convertBinaryToDecimal(binaryKey);
+        System.out.println("Binary key as decimal: " + binaryKeyAsDecimal);
+        BigInteger binaryKeyAsDecimalEncrypted = cipher(binaryKeyAsDecimal, key.getPublicKey(), key.getModulus());
 
-        System.out.println("Encrypted key: " + encryptedKey);
+        System.out.println("Binary Key As Decimal Encrypted: " + binaryKeyAsDecimalEncrypted);
 
-        BigInteger decryptedKey = cipher(encryptedKey, key.getPrivateKey(), key.getModulus());
-        System.out.println("Decrypted key: " + decryptedKey);
+        BigInteger binaryKeyAsDecimalDecrypted = cipher(binaryKeyAsDecimalEncrypted, key.getPrivateKey(), key.getModulus());
+        System.out.println("Binary Key As Decimal Decrypted: " + binaryKeyAsDecimalDecrypted);
 
-        int[] decryptedBinaryKey = convertDecimalToBinary(decryptedKey);
-        System.out.println("Decrypted binary key: ");
-        printArray(decryptedBinaryKey);
+        int[] binaryKeyBackToBinary = convertDecimalToBinary(binaryKeyAsDecimalDecrypted);
+        printArray(binaryKeyBackToBinary);
 
-        String decryptedBinary = pad.decryptBinary(encryptedBinary, convertIntToArray(decryptedKey));
-        System.out.println(decryptedBinary);
+        String decryptedBinary = pad.decryptBinary(encryptedBinary, binaryKeyBackToBinary);
+
+        System.out.println("Decrypted String: " + decryptedBinary);
+
+
 
     }
 
