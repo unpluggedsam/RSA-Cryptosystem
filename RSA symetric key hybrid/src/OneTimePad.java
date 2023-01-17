@@ -23,19 +23,19 @@ public class OneTimePad {
         }
     }
 
-    public int[] encryptString(String value, int[] key) {
+    public static int[] encryptString(String value, int[] key) {
         int[] binary = convertStringToBinary(value);
         List<int[]> blockBits = blockBinaryBits(binary);
         return encryptBlockBits(blockBits, key, binary.length);
     }
 
-    public String decryptBinary(int[] binary, int[] key) {
+    public static String decryptBinary(int[] binary, int[] key) {
         List<int[]> blockBits = blockBinaryBits(binary);
         int[] decryptedBits = decryptBlockBits(blockBits, key, binary.length);
         return convertBinaryToString(decryptedBits);
     }
 
-    private int[] convertStringToBinary(String value) {
+    private static int[] convertStringToBinary(String value) {
 
         StringBuilder strBuilder = new StringBuilder();
         char[] chars = value.toCharArray();
@@ -60,7 +60,7 @@ public class OneTimePad {
      * Decrypts Cipher Block Chaining. First, it decrypts the block using operation D, and then
      * decrypts that decrypted block using the cipher text previous to that block.
      */
-    private int[] decryptBlockBits(List<int[]> blockBits, int[] key, int size) {
+    private static int[] decryptBlockBits(List<int[]> blockBits, int[] key, int size) {
 
         List<Integer> result = new ArrayList<>(size);
 
@@ -77,7 +77,7 @@ public class OneTimePad {
     /**
      * Cipher Block Chaining. Essentially, if the operation to encrypt is E, then each block is encrypted with both E and the previous block.
      */
-    private int[] encryptBlockBits(List<int[]> blockBits, int[] key, int size) {
+    private static int[] encryptBlockBits(List<int[]> blockBits, int[] key, int size) {
 
         List<int[]> encryptedBlockBits = new ArrayList<>(size);
         List<Integer> result = new ArrayList<>(size);
@@ -103,7 +103,7 @@ public class OneTimePad {
      * and x ⊕ 1 = opposite of x
      * ^ is the XOR operator
      **/
-    private int[] XORBinary(int[] binary, int[] key) {
+    private static int[] XORBinary(int[] binary, int[] key) {
 
         int[] result = new int[binary.length];
 
@@ -120,7 +120,7 @@ public class OneTimePad {
      * If the binary does not reach the 128 block chunk
      * then a smaller array is created.
      */
-    private List<int[]> blockBinaryBits(int[] binary) {
+    private static List<int[]> blockBinaryBits(int[] binary) {
         List<int[]> blockBits = new ArrayList<>();
         for (int i = 0; i < binary.length; i += 128) {
             int size = Math.min(binary.length - i, 128);
@@ -131,7 +131,7 @@ public class OneTimePad {
         return blockBits;
     }
 
-    private String convertBinaryToString(int[] binaryArray) {
+    private static String convertBinaryToString(int[] binaryArray) {
         String binary = Arrays.stream(binaryArray)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.joining());

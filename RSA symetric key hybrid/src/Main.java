@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -8,66 +6,14 @@ public class Main {
 
         String text = "I LOVE eating some stuff occasionally and having friends.";
 
-        Key key = new Key();
+        Computer computer1 = new Computer();
+        Computer computer2 = new Computer();
 
-        OneTimePad pad = new OneTimePad();
+        computer1.sendMessage(computer2, text, OneTimePad.KEY_SIZE.ONE_HUNDRED_TWENTY_EIGHT);
 
-        int[] binaryKey = pad.generateKey(OneTimePad.KEY_SIZE.ONE_HUNDRED_NINETY_SIX);
-
-        System.out.println("Binary Key: ");
-        printArray(binaryKey);
-
-        int[] encryptedBinary = pad.encryptString(text, binaryKey);
-
-        System.out.println(convertBinaryToString(encryptedBinary));
-
-        BigInteger binaryKeyAsDecimal = convertBinaryToDecimal(binaryKey);
-        System.out.println("Binary key as decimal: " + binaryKeyAsDecimal);
-        BigInteger binaryKeyAsDecimalEncrypted = cipher(binaryKeyAsDecimal, key.getPublicKey(), key.getModulus());
-
-        System.out.println("Binary Key As Decimal Encrypted: " + binaryKeyAsDecimalEncrypted);
-
-        BigInteger binaryKeyAsDecimalDecrypted = cipher(binaryKeyAsDecimalEncrypted, key.getPrivateKey(), key.getModulus());
-        System.out.println("Binary Key As Decimal Decrypted: " + binaryKeyAsDecimalDecrypted);
-
-        int[] binaryKeyBackToBinary = convertDecimalToBinary(binaryKeyAsDecimalDecrypted);
-        printArray(binaryKeyBackToBinary);
-
-        String decryptedBinary = pad.decryptBinary(encryptedBinary, binaryKeyBackToBinary);
-
-        System.out.println("Decrypted String: " + decryptedBinary);
+       System.out.println(computer2.getRecentMessages().get(0));
 
 
-
-    }
-
-    private static BigInteger convertBinaryToDecimal(int[] binary) {
-        BigInteger decimal = BigInteger.ZERO;
-        BigInteger two = BigInteger.TWO;
-        for (int i = 0; i < binary.length; i++) {
-            decimal = decimal.add(BigInteger.valueOf(binary[i]).multiply(two.pow(binary.length - i - 1)));
-        }
-        return decimal;
-    }
-
-    private static int[] convertDecimalToBinary(BigInteger decimal) {
-        ArrayList<Integer> binaryList = new ArrayList<>();
-        while (!decimal.equals(BigInteger.ZERO)) {
-            BigInteger[] divideAndRemainder = decimal.divideAndRemainder(BigInteger.TWO);
-            binaryList.add(divideAndRemainder[1].intValue());
-            decimal = divideAndRemainder[0];
-        }
-
-        int[] binary = new int[binaryList.size()];
-        for (int i = 0; i < binary.length; i++) {
-            binary[i] = binaryList.get(binary.length - 1 - i);
-        }
-        return binary;
-    }
-    
-
-    private static BigInteger cipher(BigInteger parsedInt, BigInteger publicKey, BigInteger modulus) {
-        return parsedInt.modPow(publicKey, modulus);
     }
 
     private static String convertBinaryToString(int[] binaryArray) {
@@ -87,10 +33,5 @@ public class Main {
         return sb.toString();
     }
 
-    private static void printArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]);
-        }
-        System.out.println();
-    }
+
 }
